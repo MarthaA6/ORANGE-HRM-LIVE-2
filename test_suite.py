@@ -4,6 +4,7 @@ from selenium import webdriver
 from Admin_Page.AdminPage import AdminPage
 from Buzz_Page.BuzzPage import BuzzPage
 from Claim_Page.ClaimPage import ClaimPage
+from Config.Config import ConfigRestrictedAccess, ConfigLogin
 from Dashboard_Page.DashboardPage import DashboardPage
 from Directory_Page.DirectoryPage import DirectoryPage
 from Leave_Page.LeavePage import LeavePage
@@ -30,13 +31,13 @@ def driver_setup():
 def login(driver_setup):
     driver = driver_setup
     login_page = LoginPage(driver)
-    login_page.login_url("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login")
+    login_page.login_url(ConfigLogin.BaseUrl)
     return login_page
 
 
 def test_login_page_automation_playground(login):
-    login.enter_username("Admin")
-    login.enter_password("admin123")
+    login.enter_username(ConfigLogin.USERNAME)
+    login.enter_password(ConfigLogin.PASSWORD)
     login.click_login()
 
 
@@ -281,7 +282,8 @@ def test_maintenance_sidebar_on_orange_hrm(login):
 
     # --------------------------------------------------------------------------------------------------------------------
     # --------------------------------------------------------------------------------------------------------------------
-    maintenance_sidebar.enter_password("admin123")
+    # RESTRICTED ACCESS --------------------------------------------------------------------------------------------------
+    maintenance_sidebar.enter_password(ConfigRestrictedAccess.PASSWORD)
     maintenance_sidebar.click_confirm_button()
     # --------------------------------------------------------------------------------------------------------------------
     # --------------------------------------------------------------------------------------------------------------------
